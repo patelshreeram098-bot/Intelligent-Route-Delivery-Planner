@@ -44,4 +44,16 @@ public class LocationManager {
 
         System.out.println("Location not found.");
     }
+
+    public Location getLocationById(int id) {
+
+    for (Location location : locations) {
+
+        if (location.getId() == id) {
+            return location;
+        }
+    }
+
+    return null;
+    }
 }
