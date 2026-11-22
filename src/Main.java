@@ -25,7 +25,8 @@ public class Main {
                 System.out.println("6. View Routes From Location");
                 System.out.println("7. View Graph");
                 System.out.println("8. Perform BFS");
-                System.out.println("9. Exit");
+                System.out.println("9. Find Shortest Route");
+                System.out.println("10. Exit");
 
                 System.out.print("Enter your choice: ");
 
@@ -67,10 +68,9 @@ public class Main {
                     case 4 -> {
 
                         System.out.print("Enter source location ID: ");
-                        int sourceId;
 
                         try {
-                            sourceId = Integer.parseInt(scanner.nextLine());
+                            int sourceId = Integer.parseInt(scanner.nextLine());
 
                             System.out.print("Enter destination location ID: ");
                             int destinationId = Integer.parseInt(scanner.nextLine());
@@ -118,23 +118,40 @@ public class Main {
                         }
                     }
 
-                   case 7 -> routeManager.viewGraph();
+                    case 7 -> routeManager.viewGraph();
 
-                case 8 -> {
-    System.out.print("Enter starting location ID: ");
+                    case 8 -> {
 
-    try {
-        int id = Integer.parseInt(scanner.nextLine());
-        routeManager.performBFS(id);
-    } catch (NumberFormatException e) {
-        System.out.println("Please enter a valid ID.");
-    }
-}
+                        System.out.print("Enter starting location ID: ");
 
-case 9 -> {
-    running = false;
-    System.out.println("Exiting application...");
-}
+                        try {
+                            int id = Integer.parseInt(scanner.nextLine());
+                            routeManager.performBFS(id);
+                        } catch (NumberFormatException e) {
+                            System.out.println("Please enter a valid ID.");
+                        }
+                    }
+
+                    case 9 -> {
+
+                        try {
+                            System.out.print("Enter source location ID: ");
+                            int sourceId = Integer.parseInt(scanner.nextLine());
+
+                            System.out.print("Enter destination location ID: ");
+                            int destinationId = Integer.parseInt(scanner.nextLine());
+
+                            routeManager.findShortestRoute(sourceId, destinationId);
+
+                        } catch (NumberFormatException e) {
+                            System.out.println("Please enter valid location IDs.");
+                        }
+                    }
+
+                    case 10 -> {
+                        running = false;
+                        System.out.println("Exiting application...");
+                    }
 
                     default -> System.out.println("Invalid choice.");
                 }

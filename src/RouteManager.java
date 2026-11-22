@@ -4,22 +4,16 @@ public class RouteManager {
 
     private final ArrayList<Route> routes = new ArrayList<>();
     private final Graph graph = new Graph();
+
     public void addRoute(Location source, Location destination, double distance) {
 
         Route route = new Route(source, destination, distance);
 
         routes.add(route);
         graph.addRoute(route);
+
         System.out.println("Route added successfully!");
     }
-
-    public void viewGraph() {
-    graph.displayGraph();
-    }
-
-    public void performBFS(int locationId) {
-    graph.bfs(locationId);
-    }   
 
     public void viewRoutes() {
 
@@ -50,5 +44,17 @@ public class RouteManager {
         if (!found) {
             System.out.println("No routes found from this location.");
         }
+    }
+
+    public void viewGraph() {
+        graph.displayGraph();
+    }
+
+    public void performBFS(int locationId) {
+        graph.bfs(locationId);
+    }
+
+    public void findShortestRoute(int sourceId, int destinationId) {
+        graph.dijkstra(sourceId, destinationId);
     }
 }
