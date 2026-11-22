@@ -107,7 +107,6 @@ public class Graph {
                 int neighbourId = route.getDestination().getId();
 
                 if (!visited.contains(neighbourId)) {
-
                     visited.add(neighbourId);
                     queue.add(neighbourId);
                 }
@@ -187,42 +186,26 @@ public class Graph {
         path.add(startId);
         Collections.reverse(path);
 
+        Map<Integer, Location> locationMap = new HashMap<>();
+
+        for (List<Route> routes : adjacencyList.values()) {
+            for (Route route : routes) {
+                locationMap.put(
+                        route.getSource().getId(),
+                        route.getSource()
+                );
+                locationMap.put(
+                        route.getDestination().getId(),
+                        route.getDestination()
+                );
+            }
+        }
+
         System.out.println("\n===== SHORTEST ROUTE =====");
 
         for (int i = 0; i < path.size(); i++) {
 
-            int id = path.get(i);
-            Location location = null;
-
-            for (List<Route> routes : adjacencyList.values()) {
-                for (Route route : routes) {
-
-                    if (route.getSource().getId() == id) {
-                        location = route.getSource();
-                        break;
-                    }
-                }
-
-                if (location != null) {
-                    break;
-                }
-            }
-
-            if (location == null) {
-                for (List<Route> routes : adjacencyList.values()) {
-                    for (Route route : routes) {
-
-                        if (route.getDestination().getId() == id) {
-                            location = route.getDestination();
-                            break;
-                        }
-                    }
-
-                    if (location != null) {
-                        break;
-                    }
-                }
-            }
+            Location location = locationMap.get(path.get(i));
 
             System.out.print(location.getName());
 

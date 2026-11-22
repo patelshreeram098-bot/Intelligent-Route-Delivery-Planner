@@ -5,7 +5,7 @@ public class Main {
     public static void main(String[] args) {
 
         LocationManager locationManager = new LocationManager();
-        RouteManager routeManager = new RouteManager();
+        RouteManager routeManager = new RouteManager(locationManager);
 
         try (Scanner scanner = new Scanner(System.in)) {
 
@@ -26,7 +26,9 @@ public class Main {
                 System.out.println("7. View Graph");
                 System.out.println("8. Perform BFS");
                 System.out.println("9. Find Shortest Route");
-                System.out.println("10. Exit");
+                System.out.println("10. Delete Location");
+                System.out.println("11. Delete Route");
+                System.out.println("12. Exit");
 
                 System.out.print("Enter your choice: ");
 
@@ -45,16 +47,13 @@ public class Main {
                         System.out.print("Enter location name: ");
                         String name = scanner.nextLine().trim();
 
-                        if (name.isEmpty()) {
-                            System.out.println("Location name cannot be empty.");
-                        } else {
-                            locationManager.addLocation(name);
-                        }
+                        locationManager.addLocation(name);
                     }
 
                     case 2 -> locationManager.viewLocations();
 
                     case 3 -> {
+
                         System.out.print("Enter Location ID: ");
 
                         try {
@@ -67,9 +66,8 @@ public class Main {
 
                     case 4 -> {
 
-                        System.out.print("Enter source location ID: ");
-
                         try {
+                            System.out.print("Enter source location ID: ");
                             int sourceId = Integer.parseInt(scanner.nextLine());
 
                             System.out.print("Enter destination location ID: ");
@@ -81,15 +79,7 @@ public class Main {
                             Location source = locationManager.getLocationById(sourceId);
                             Location destination = locationManager.getLocationById(destinationId);
 
-                            if (source == null || destination == null) {
-                                System.out.println("Invalid location ID.");
-                            } else if (sourceId == destinationId) {
-                                System.out.println("Source and destination cannot be the same.");
-                            } else if (!Double.isFinite(distance) || distance <= 0) {
-                                System.out.println("Distance must be a positive number.");
-                            } else {
-                                routeManager.addRoute(source, destination, distance);
-                            }
+                            routeManager.addRoute(source, destination, distance);
 
                         } catch (NumberFormatException e) {
                             System.out.println("Please enter valid numeric values.");
@@ -100,7 +90,7 @@ public class Main {
 
                     case 6 -> {
 
-                        System.out.print("Enter source location ID: ");
+                        System.out.print("Enter location ID: ");
 
                         try {
                             int id = Integer.parseInt(scanner.nextLine());
@@ -149,6 +139,41 @@ public class Main {
                     }
 
                     case 10 -> {
+
+                        System.out.print("Enter Location ID to delete: ");
+
+                        try {
+                            int id = Integer.parseInt(scanner.nextLine());
+
+                            if (locationManager.getLocationById(id) == null) {
+                                System.out.println("Location not found.");
+                            } else {
+                                routeManager.removeRoutesForLocation(id);
+                                locationManager.deleteLocation(id);
+                            }
+
+                        } catch (NumberFormatException e) {
+                            System.out.println("Please enter a valid ID.");
+                        }
+                    }
+
+                    case 11 -> {
+
+                        try {
+                            System.out.print("Enter source location ID: ");
+                            int sourceId = Integer.parseInt(scanner.nextLine());
+
+                            System.out.print("Enter destination location ID: ");
+                            int destinationId = Integer.parseInt(scanner.nextLine());
+
+                            routeManager.deleteRoute(sourceId, destinationId);
+
+                        } catch (NumberFormatException e) {
+                            System.out.println("Please enter valid location IDs.");
+                        }
+                    }
+
+                    case 12 -> {
                         running = false;
                         System.out.println("Exiting application...");
                     }
