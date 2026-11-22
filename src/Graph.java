@@ -1,7 +1,11 @@
+import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
+import java.util.Set;
 
 public class Graph {
 
@@ -26,6 +30,46 @@ public class Graph {
                 .computeIfAbsent(destination.getId(), k -> new ArrayList<>())
                 .add(reverseRoute);
     }
+
+    public void bfs(int startId) {
+
+    if (!adjacencyList.containsKey(startId)) {
+        System.out.println("Location not found in graph.");
+        return;
+    }
+
+    Queue<Integer> queue = new ArrayDeque<>();
+    Set<Integer> visited = new HashSet<>();
+
+    queue.add(startId);
+    visited.add(startId);
+
+    System.out.println("\n===== BFS TRAVERSAL =====");
+
+    while (!queue.isEmpty()) {
+
+        int currentId = queue.poll();
+
+        List<Route> routes = adjacencyList.get(currentId);
+
+        Location currentLocation = routes.get(0).getSource();
+
+        System.out.print(currentLocation.getName() + " -> ");
+
+        for (Route route : routes) {
+
+            int neighbourId = route.getDestination().getId();
+
+            if (!visited.contains(neighbourId)) {
+
+                visited.add(neighbourId);
+                queue.add(neighbourId);
+            }
+        }
+    }
+
+    System.out.println("END");
+}
 
     public void displayGraph() {
 

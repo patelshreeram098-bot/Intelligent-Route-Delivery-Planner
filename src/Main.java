@@ -24,7 +24,8 @@ public class Main {
                 System.out.println("5. View All Routes");
                 System.out.println("6. View Routes From Location");
                 System.out.println("7. View Graph");
-                System.out.println("8. Exit");
+                System.out.println("8. Perform BFS");
+                System.out.println("9. Exit");
 
                 System.out.print("Enter your choice: ");
 
@@ -120,9 +121,20 @@ public class Main {
                    case 7 -> routeManager.viewGraph();
 
                 case 8 -> {
-                running = false;
-                System.out.println("Exiting application...");
-                }
+    System.out.print("Enter starting location ID: ");
+
+    try {
+        int id = Integer.parseInt(scanner.nextLine());
+        routeManager.performBFS(id);
+    } catch (NumberFormatException e) {
+        System.out.println("Please enter a valid ID.");
+    }
+}
+
+case 9 -> {
+    running = false;
+    System.out.println("Exiting application...");
+}
 
                     default -> System.out.println("Invalid choice.");
                 }

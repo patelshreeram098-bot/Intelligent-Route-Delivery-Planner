@@ -12,10 +12,14 @@ public class RouteManager {
         graph.addRoute(route);
         System.out.println("Route added successfully!");
     }
-    
+
     public void viewGraph() {
     graph.displayGraph();
     }
+
+    public void performBFS(int locationId) {
+    graph.bfs(locationId);
+    }   
 
     public void viewRoutes() {
 
