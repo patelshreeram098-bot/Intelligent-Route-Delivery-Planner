@@ -23,7 +23,8 @@ public class Main {
                 System.out.println("4. Add Route");
                 System.out.println("5. View All Routes");
                 System.out.println("6. View Routes From Location");
-                System.out.println("7. Exit");
+                System.out.println("7. View Graph");
+                System.out.println("8. Exit");
 
                 System.out.print("Enter your choice: ");
 
@@ -116,10 +117,12 @@ public class Main {
                         }
                     }
 
-                    case 7 -> {
-                        running = false;
-                        System.out.println("Exiting application...");
-                    }
+                   case 7 -> routeManager.viewGraph();
+
+                case 8 -> {
+                running = false;
+                System.out.println("Exiting application...");
+                }
 
                     default -> System.out.println("Invalid choice.");
                 }
